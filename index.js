@@ -21,4 +21,4 @@ app.use('/api/v1/', router)
 
 app.use('/uploads', express.static('uploads'))
 
-app.listen(port, () => console.log(`Listening on port: ${port}!`))
+server.listen(port, () => console.log(`Listening on port: ${port}!`))
