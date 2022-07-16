@@ -4,6 +4,7 @@ const router = express.Router()
 // ========== Controllers ========== //
 const { register, login, checkAuth } = require('../controllers/auth')
 const { getUsers, getUser, updateUser, deleteUser } = require('../controllers/users')
+const { addCampaign } = require('../controllers/campaign')
 
 // ========== Middlewares ========== //
 const { auth } = require('../middlewares/auth')
@@ -22,6 +23,6 @@ router.patch('/user/:id', auth, updateUser)
 router.delete('/user/:id', auth, deleteUser)
 
 // Campaign
-
+router.post('/campaign', auth, uploadFile('image_url'), addCampaign)
 
 module.exports = router
