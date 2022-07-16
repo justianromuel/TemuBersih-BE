@@ -9,6 +9,7 @@ const { addCampaign, getCampaigns, getDetailCampaign } = require('../controllers
 // ========== Middlewares ========== //
 const { auth } = require('../middlewares/auth')
 const { uploadFile } = require('../middlewares/uploadFile')
+const { joinUserCampaign, getUserCampaigns, getUserCampaignById } = require('../controllers/user_campaign')
 
 // ========== Route ========== //
 // Authentication
@@ -26,5 +27,10 @@ router.delete('/user/:id', auth, deleteUser)
 router.post('/campaign', auth, uploadFile('image_url'), addCampaign)
 router.get('/campaigns', getCampaigns)
 router.get('/campaign/:id', getDetailCampaign)
+
+// User Campaign
+router.post('/campaign/:id', auth, joinUserCampaign)
+router.get('/user-campaigns', getUserCampaigns)
+router.get('/user-campaign/:id', getUserCampaignById)
 
 module.exports = router

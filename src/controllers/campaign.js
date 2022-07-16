@@ -1,6 +1,6 @@
 const { campaign, users, user_campaign } = require('../../models')
 
-exports.addCampaign = async (req, res) => {
+exports.joinCampaign = async (req, res) => {
     try {
         console.log('req.user:', req.user);
         const data = {
@@ -75,7 +75,7 @@ exports.getCampaigns = async (req, res) => {
     try {
         let campaigns = await campaign.findAll({
             attributes: {
-                exclude: ["createdAt", "updatedAt", "idUser"],
+                exclude: ["createdAt", "updatedAt", "password"],
             },
         })
 
@@ -132,12 +132,12 @@ exports.getDetailCampaign = async (req, res) => {
                         attributes: [],
                     },
                     attributes: {
-                        exclude: ['createdAt', 'updatedAt'],
+                        exclude: ['createdAt', 'updatedAt', 'password'],
                     },
                 },
             ],
             attributes: {
-                exclude: ["createdAt", "updatedAt", "idUser"],
+                exclude: ["createdAt", "updatedAt", "password"],
             },
         })
 
