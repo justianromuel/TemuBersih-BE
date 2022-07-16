@@ -1,6 +1,6 @@
 const { campaign, users, user_campaign } = require('../../models')
 
-exports.joinCampaign = async (req, res) => {
+exports.addCampaign = async (req, res) => {
     try {
         console.log('req.user:', req.user);
         const data = {

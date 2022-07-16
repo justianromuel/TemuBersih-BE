@@ -1,6 +1,6 @@
 const { user_campaign, users, campaign } = require('../../models')
 
-exports.addUserCampaign = async (req, res) => {
+exports.joinUserCampaign = async (req, res) => {
     try {
         let user_id = req.user.id
         let campaign_id = req.params.id
