@@ -71,6 +71,98 @@ exports.addCampaign = async (req, res) => {
     }
 }
 
+exports.getCampaigns = async (req, res) => {
+    try {
+        let campaigns = await campaign.findAll({
+            attributes: {
+                exclude: ["createdAt", "updatedAt", "idUser"],
+            },
+        })
+
+        campaigns = JSON.parse(JSON.stringify(campaigns))
+        campaigns = campaigns.map((item) => {
+            return {
+                ...item,
+                image_url: process.env.FILE_PATH + item.image_url
+            }
+        })
+
+        if (!campaigns.length) {
+            return res.send({
+                message: 'There is no data, please add new data!.'
+            })
+        }
+
+        res.send({
+            status: 'success',
+            data: {
+                campaigns
+            }
+        })
+
+    } catch (error) {
+        console.log(error)
+        res.send({
+            status: "failed",
+            message: "Server Error",
+        })
+    }
+}
+
+exports.getDetailCampaign = async (req, res) => {
+    try {
+        const { id } = req.params
+
+        let data = await campaign.findOne({
+            where: { id },
+            include: [
+                {
+                    model: users,
+                    as: 'user',
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt', 'password'],
+                    },
+                },
+                {
+                    model: users,
+                    as: 'users',
+                    through: {
+                        model: user_campaign,
+                        as: 'bridge',
+                        attributes: [],
+                    },
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt'],
+                    },
+                },
+            ],
+            attributes: {
+                exclude: ["createdAt", "updatedAt", "idUser"],
+            },
+        })
+
+        data = JSON.parse(JSON.stringify(data))
+        console.log("data:", data);
+        data = {
+            ...data,
+            image_url: process.env.FILE_PATH + data.image_url
+        }
+
+        res.send({
+            status: "success",
+            data: {
+                data
+            }
+        })
+    } catch (error) {
+        console.log(error)
+        res.send({
+            status: "failed",
+            message: "Server Error",
+        })
+    }
+}
+
 exports.deleteCampaign = async (req, res) => {
     try {
         const { id } = req.params
