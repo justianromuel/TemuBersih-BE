@@ -1,0 +1,3 @@
+npx sequelize-cli model:generate --name users --attributes full_name:string,email:string,password:string
+npx sequelize-cli model:generate --name campaign --attributes name:string,description:text,location_name:string,location_url:string,person:integer,date:dateonly,start_hour:time,end_hour:time,target:integer,image_url:string,created_by:integer
+npx sequelize-cli model:generate --name user_campaign --attributes campaign_id:integer,user_id:integer
