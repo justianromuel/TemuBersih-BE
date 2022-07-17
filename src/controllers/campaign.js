@@ -1,8 +1,15 @@
 const { campaign, users, user_campaign } = require('../../models')
+const cloudinary = require('../utils/cloudinary')
 
 exports.addCampaign = async (req, res) => {
     try {
-        console.log('req.user:', req.user);
+        const result = await cloudinary.uploader.upload(req.file.path, {
+            folder: 'temubersih_file',
+            use_filename: true,
+            unique_filename: false,
+        });
+
+        // console.log('req.user:', req.user);
         const data = {
             name: req.body.name,
             description: req.body.description,
@@ -13,7 +20,7 @@ exports.addCampaign = async (req, res) => {
             start_hour: req.body.start_hour,
             end_hour: req.body.end_hour,
             target: req.body.target,
-            image_url: req.file.filename,
+            image_url: result.public_id,
             created_by: req.user.id
         }
 
