@@ -48,6 +48,22 @@ exports.joinUserCampaign = async (req, res) => {
 exports.getUserCampaigns = async (req, res) => {
     try {
         const userCampaign = await user_campaign.findAll({
+            include: [
+                {
+                    model: users,
+                    as: 'user',
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt', 'password'],
+                    },
+                },
+                {
+                    model: campaign,
+                    as: 'campaign',
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt',],
+                    },
+                },
+            ],
             attributes: {
                 exclude: ['createdAt', 'updatedAt'],
             },
@@ -81,6 +97,22 @@ exports.getUserCampaignById = async (req, res) => {
             where: {
                 campaign_id: id
             },
+            include: [
+                {
+                    model: users,
+                    as: 'user',
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt', 'password', 'id'],
+                    },
+                },
+                {
+                    model: campaign,
+                    as: 'campaign',
+                    attributes: {
+                        exclude: ['createdAt', 'updatedAt', 'id'],
+                    },
+                },
+            ],
             attributes: {
                 exclude: ['createdAt', 'updatedAt'],
             },

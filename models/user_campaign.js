@@ -11,6 +11,22 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+
+      //belongsTo association to users model
+      user_campaign.belongsTo(models.users, {
+        as: 'user',
+        foreignKey: {
+          name: 'user_id'
+        }
+      })
+
+      //belongsTo association to campaign model
+      user_campaign.belongsTo(models.campaign, {
+        as: 'campaign',
+        foreignKey: {
+          name: 'campaign_id'
+        }
+      })
     }
   }
   user_campaign.init({
