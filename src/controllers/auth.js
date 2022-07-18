@@ -118,7 +118,9 @@ exports.login = async (req, res) => {
         if (!isValid) {
             return res.status(400).send({
                 status: 'failed',
-                message: 'Credential is invalid'
+                error: {
+                    message: 'Credential is invalid'
+                }
             })
         }
 
